@@ -7,17 +7,15 @@ class Kick(commands.Cog):
 
     @commands.has_permissions(kick_members=True)
     @commands.command()
-    async def kick(self, ctx, member : discord.Member, *, reason=None):
+    async def kick(self, ctx, member : discord.Member, *, reason='Ein Team-Mitglied hatte sich entschieden, dich zu kicken.'):
 
-        embed = discord.Embed(color=0x415fe6, title=f'Der User {member.name} wurde gekickt.')
+        embed = discord.Embed(color=0x415fe6, title=f'<a:bewegendeszeichenlmao:920059343108452353> Kick!', description=f'Der User **{member}** wurde gekickt.')
         
-        if reason == None:
-            await member.kick(reason='Ein Administrator hatte sich entschieden, dich zu kicken.')
-            await ctx.send(embed=embed)
-            return
-            
+        reason_none_embed = discord.Embed(color=0x415fe6, title=f'<a:bewegendeszeichenlmao:920059343108452353> Gekickt!', description=f'Du wurdest von Waterworld gekickt.\n<:waterworld_pfeil:920318666535469056> {reason}')
+        await member.send(embed=reason_none_embed)
         await member.kick(reason=reason)
         await ctx.send(embed=embed)
+            
 
 def setup(client):
     client.add_cog(Kick(client))

@@ -4,6 +4,7 @@ from discord.ext import commands
 from typing import Optional
 from easy_pil import Editor, load_image_async, Font
 import json
+import random
 
 level = [
     '💙 » Neptun', 
@@ -39,14 +40,16 @@ class LevelSystem(commands.Cog):
                 if str(message.author.id) in data:
                     xp = data[str(message.author.id)]['xp']
                     lvl = data[str(message.author.id)]['level']
+                    
+                    amt = random.randint(0, 10)
 
-                    increased_xp = xp + 10
+                    increased_xp = xp + amt
                     new_level = int(increased_xp/100)
 
                     data[str(message.author.id)]['xp'] = increased_xp
 
                     with open('levels.json', 'w') as f:
-                        json.dump(data, f)
+                        json.dump(data, f, indent=4)
                     
                     if new_level > lvl:
                         await message.channel.send(f'{message.author.mention} ist nun Level {new_level}!')
@@ -54,7 +57,7 @@ class LevelSystem(commands.Cog):
                         data[str(message.author.id)]['xp'] = 0
 
                         with open('levels.json', 'w') as f:
-                            json.dump(data, f)
+                            json.dump(data, f, indent=4)
 
                         for i in range(len(level)):
                             if new_level == level_num[i]:
@@ -68,7 +71,7 @@ class LevelSystem(commands.Cog):
                     data[str(message.author.id)]['level'] = 1
 
                     with open('levels.json', 'w') as f:
-                        json.dump(data, f)
+                        json.dump(data, f, indent=4)
     @commands.command(aliases=['level'])
     async def rank(self, ctx, user : Optional[discord.Member]):
         member = user or ctx.author
@@ -112,14 +115,29 @@ class LevelSystem(commands.Cog):
         background.rectangle((200, 100), width=350, height=2, fill="#ff9933")
         background.text(
             (200, 130),
-            f"Level : {lvl}   "
-            + f" XP : {xp} / {(lvl+1) * 100}",
+            f"Level: {lvl}   "
+            + f" XP: {xp} / {(lvl+1) * 100}",
             font=poppins_small,
             color="#ff9933",
         )
 
         card = File(fp=background.image_bytes, filename='zCARD.png')
         await ctx.send(file=card)
+    
+    @commands.has_permissions(administrator=True)
+    @commands.command()
+    async def setlevel(self, ctx, member : discord.Member, new_level : int):
+        with open('levels.json', 'r') as f:
+            data = json.load(f)
+        
+        level = data[str(member.id)]['level']
+        data[str(member.id)]['level'] = new_level
+
+        with open('levels.json', 'w') as f:
+            json.dump(data, f, indent=4)
+
+        embed = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Level gesetzt!', description=f'{member.mention} ist nun **Level {new_level}**.')
+        await ctx.send(embed=embed)
 
 def setup(client):
     client.add_cog(LevelSystem(client))

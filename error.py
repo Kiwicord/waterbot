@@ -9,11 +9,14 @@ class CommandErrorHandler(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
 
-        if isinstance(error, commands.CommandError):
-                    
-            embed = discord.Embed(title="Fehler!", color=0xff6961, description=f"```{error}```")
-            embed.set_footer(text="Um den Fehler zu reporten, wende dich bitte an das Serverteam.")
+        if isinstance(error, commands.MissingPermissions):
+            
+            embed1 = discord.Embed(title='Fehler!', color=0xff6961, description='Du hast keine Berechtigungen um diesen Befehl auszuführen!')
+            await ctx.send(embed=embed1)
 
+        if isinstance(error, commands.CommandNotFound):
+                    
+            embed = discord.Embed(title="Fehler!", color=0xff6961, description=f'Der Befehl wurde nicht gefunden!')
             await ctx.send(embed=embed)
 
 def setup(client):

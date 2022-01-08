@@ -89,7 +89,7 @@ class LevelSystem(commands.Cog):
         percentage = int(((xp_have*100)/xp_needed))
 
         background = Editor('zIMAGE.png')
-        profile = await load_image_async(str(member.avatar.url))
+        profile = await load_image_async(member.avatar.url)
         profile = Editor(profile).resize((150, 150)).circle_image()
 
         poppins = Font.poppins(size=40)

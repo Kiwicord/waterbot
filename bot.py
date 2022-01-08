@@ -1,7 +1,5 @@
 import discord
 from discord.ext import commands
-from dotenv import load_dotenv
-from os import getenv
 import asyncio
 
 from commands.test import Test
@@ -40,7 +38,5 @@ async def setup():
     client.add_cog(LevelSystem(client))
     client.add_cog(CommandErrorHandler(client))
 
-
-load_dotenv()
 client.loop.create_task(setup())
-client.run(getenv('TOKEN'))
+client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

@@ -42,12 +42,12 @@ class Hack(commands.Cog):
 
         prob = random.choice(CHANCE)
 
-        embed.add_field(name='🎫 » Name', value=f'{vorname} {nachname}', inline=False)
-        embed.add_field(name='🖥️ » IP-Adresse', value=f'{ip1}.{ip2}.{ip3}.{ip4}', inline=False)
-        embed.add_field(name='📌 » Wohnort', value=wohnort, inline=False)
-        embed.add_field(name='🏠 » Straße und Hausnummer', value=street, inline=False)
-        embed.add_field(name='✉️ » E-Mail Adresse', value=email, inline=False)
-        embed.add_field(name='⚙️ » Passwort', value=password, inline=False)
+        embed.add_field(name='🎫 » Name', value=f'*{vorname} {nachname}*', inline=False)
+        embed.add_field(name='🖥️ » IP-Adresse', value=f'*{ip1}.{ip2}.{ip3}.{ip4}*', inline=False)
+        embed.add_field(name='📌 » Wohnort', value=f'*{wohnort}*', inline=False)
+        embed.add_field(name='🏠 » Straße und Hausnummer', value=f'*{street}*', inline=False)
+        embed.add_field(name='✉️ » E-Mail Adresse', value=f'*{email}*', inline=False)
+        embed.add_field(name='⚙️ » Passwort', value=f'*{password}*', inline=False)
 
         embed.set_footer(text='Dies sollte nicht ernst genommen werden da diese Daten zufällig generiert werden!')
 

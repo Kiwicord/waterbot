@@ -9,7 +9,6 @@ from commands.hack import Hack
 from commands.gay import Gay
 from commands.fisch import Fisch
 from commands.levels import LevelSystem
-from error import CommandErrorHandler
 
 client = commands.Bot(command_prefix='-')
 
@@ -36,7 +35,6 @@ async def setup():
     client.add_cog(Gay(client))
     client.add_cog(Fisch(client))
     client.add_cog(LevelSystem(client))
-    client.add_cog(CommandErrorHandler(client))
 
 client.loop.create_task(setup())
 client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

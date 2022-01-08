@@ -6,6 +6,7 @@ from os import getenv
 from commands.test import Test
 from commands.ban import Ban
 from commands.kick import Kick
+from commands.hack import Hack  
 
 client = commands.Bot(command_prefix='-')
 
@@ -22,6 +23,7 @@ async def setup():
     client.add_cog(Test(client))
     client.add_cog(Ban(client))
     client.add_cog(Kick(client))
+    client.add_cog(Hack(client))
 
 
 load_dotenv()

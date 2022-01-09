@@ -52,7 +52,8 @@ class LevelSystem(commands.Cog):
                         json.dump(data, f, indent=4)
                     
                     if new_level > lvl:
-                        await message.channel.send(f'{message.author.mention} ist nun Level {new_level}!')
+                        new_level_embed = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Level aufgestiegen!', description=f'{message.author.mention} ist nun Level **{new_level}**!')
+                        await message.channel.send(embed=new_level_embed)
                         data[str(message.author.id)]['level'] = new_level
                         data[str(message.author.id)]['xp'] = 0
 
@@ -89,7 +90,7 @@ class LevelSystem(commands.Cog):
         percentage = int(((xp_have*100)/xp_needed))
 
         background = Editor('zIMAGE.png')
-        profile = await load_image_async(str(member.avatar.url))
+        profile = await load_image_async(str(member.avatar_url))
         profile = Editor(profile).resize((150, 150)).circle_image()
 
         poppins = Font.poppins(size=40)

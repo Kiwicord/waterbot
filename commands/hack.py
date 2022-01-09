@@ -1,3 +1,4 @@
+
 import discord
 from discord.ext import commands
 import random
@@ -31,16 +32,9 @@ class Hack(commands.Cog):
         email = random.choice(EMAIL)
         password = random.choice(PASSWORDS)
 
-        embed1 = discord.Embed(color=0x415fe6, title=f'<a:laden:858410012690350141> Hacke {user}...')
         embed2 = discord.Embed(color=0x415fe6, title=f'<a:laden:858410012690350141> Extrahiere Datenbank-Parameter von {user}...')
-        msg1 = await ctx.send(embed=embed1)
-
+        msg2 = await ctx.send(embed=embed2)
         await asyncio.sleep(2)
-
-        msg2 = await msg1.edit(embed=embed2)
-
-        await asyncio.sleep(2)
-        
         embed = discord.Embed(color=0x77dd77, title=f'Daten von {user}')
         embed_fail = discord.Embed(color=0xff6961, title='Hack gescheitert! Der User hat eine VPN an!')
 

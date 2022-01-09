@@ -93,4 +93,5 @@ class MusicPlayer(commands.Cog):
         embed5 = discord.Embed(color=0x415fe6, description=f'<a:bewegendeszeichenlmao:920059343108452353> Jetzt spielt: `{song}`')
 
 
-        
+def setup(client):
+    client.add_cog(MusicPlayer(client))        

@@ -37,7 +37,7 @@ class EconomyManager(commands.Cog):
         wallet_amt = users[str(user.id)]['wallet']
         bank_amt = users[str(user.id)]['bank']
 
-        embed = discord.Embed(title=f'<a:bewegendeszeichenlmao:929793908723052624> Kontostand von {ctx.author}', color=0x415fe6)
+        embed = discord.Embed(title=f'<a:bewegendeszeichenlmao:920059343108452353> Kontostand von {ctx.author}', color=0x415fe6)
         embed.add_field(name='Geld', value=f'**{wallet_amt}** 🐚', inline=False)
         embed.add_field(name='Bank', value=f'**{bank_amt}** 🐚', inline=False)
         await ctx.send(embed=embed)
@@ -52,7 +52,7 @@ class EconomyManager(commands.Cog):
 
         income = random.randint(1, 100)
 
-        embed = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:929793908723052624> Gearbeitet!', description=f'Du hast für **{income}** 🐚 gearbeitet.')
+        embed = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Gearbeitet!', description=f'Du hast für **{income}** 🐚 gearbeitet.')
         await ctx.send(embed=embed)
         wallet_amt = users[str(user.id)]['wallet']
         users[str(user.id)]['wallet'] += income

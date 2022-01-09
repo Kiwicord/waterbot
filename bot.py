@@ -49,4 +49,4 @@ async def setup():
     client.add_cog(EconomyManager(client))
 
 client.loop.create_task(setup())
-client.run('OTIyODk2MjI1MTg1OTY4MjU4.YcIIFg.5PQtXbT4y9VNoPjdyk0p_TMOTS0')
+client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

@@ -56,7 +56,7 @@ class Hack(commands.Cog):
         embed.set_footer(text='Dies sollte nicht ernst genommen werden da diese Daten zufällig generiert werden!')
 
         if prob == 'TRUE':
-            await msg2.edit('Erfolgreich!', embed=embed)
+            await msg2.edit(embed=embed)
         elif prob == 'FALSE':
             await msg2.edit(embed=embed_fail)
 

@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
+import threading
 
 from commands.test import Test
 from commands.ban import Ban
@@ -9,6 +10,8 @@ from commands.hack import Hack
 from commands.gay import Gay
 from commands.fisch import Fisch
 from commands.levels import LevelSystem
+
+from listeners.rainbow_role import RainbowRoleListener
 
 client = commands.Bot(command_prefix='-')
 
@@ -21,6 +24,7 @@ async def on_ready():
     print('------')
 
     while True:
+        # status
         await client.change_presence(activity=discord.Game(name=f"mit {str(len(client.guilds))} Servern"))
         await asyncio.sleep(10)
         await client.change_presence(activity=discord.Game(name="mit Kuappis Fischen"))
@@ -35,6 +39,7 @@ async def setup():
     client.add_cog(Gay(client))
     client.add_cog(Fisch(client))
     client.add_cog(LevelSystem(client))
+    client.add_cog(RainbowRoleListener(client))
 
 client.loop.create_task(setup())
 client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

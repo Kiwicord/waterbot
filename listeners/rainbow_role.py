@@ -21,8 +21,8 @@ class RainbowRoleListener(commands.Cog):
         await ctx.send(f'Rainbowrolle wird nun alle **{cooldown} Sekunden** geändert.')
 
         while True:
-            await asyncio.sleep(cooldown)
             await rainbow_role.edit(color=discord.Color.random())
+            await asyncio.sleep(cooldown)
 
 def setup(client):
     client.add_cog(RainbowRoleListener(client))

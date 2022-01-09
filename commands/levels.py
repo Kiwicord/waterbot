@@ -21,6 +21,7 @@ level = [
 
 level_num = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
 
+
 class LevelSystem(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -139,7 +140,7 @@ class LevelSystem(commands.Cog):
 
         embed = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Level gesetzt!', description=f'{member.mention} ist nun **Level {new_level}**.')
         await ctx.send(embed=embed)
-
+        
 def setup(client):
     client.add_cog(LevelSystem(client))
 

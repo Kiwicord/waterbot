@@ -12,7 +12,6 @@ from commands.fisch import Fisch
 from commands.levels import LevelSystem
 
 from listeners.rainbow_role import RainbowRoleListener
-from listeners.welcome_listener import WelcomeListener
 
 client = commands.Bot(command_prefix='-')
 
@@ -44,7 +43,6 @@ async def setup():
     client.add_cog(Fisch(client))
     client.add_cog(LevelSystem(client))
     client.add_cog(RainbowRoleListener(client))
-    client.add_cog(WelcomeListener(client))
 
 client.loop.create_task(setup())
 client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

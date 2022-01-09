@@ -10,6 +10,7 @@ from commands.hack import Hack
 from commands.gay import Gay
 from commands.fisch import Fisch
 from commands.levels import LevelSystem
+from music.player_main import MusicPlayer
 
 from listeners.rainbow_role import RainbowRoleListener
 
@@ -43,6 +44,7 @@ async def setup():
     client.add_cog(Fisch(client))
     client.add_cog(LevelSystem(client))
     client.add_cog(RainbowRoleListener(client))
+    client.add_cog(MusicPlayer(client))
 
 client.loop.create_task(setup())
 client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

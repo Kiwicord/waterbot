@@ -12,6 +12,7 @@ from commands.fisch import Fisch
 from commands.levels import LevelSystem
 from music.player_main import MusicPlayer
 from economy.main import EconomyManager
+from error import CommandErrorHandler
 
 from listeners.rainbow_role import RainbowRoleListener
 
@@ -47,6 +48,7 @@ async def setup():
     client.add_cog(RainbowRoleListener(client))
     client.add_cog(MusicPlayer(client))
     client.add_cog(EconomyManager(client))
+    client.add_cog(CommandErrorHandler(client))
 
 client.loop.create_task(setup())
 client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')

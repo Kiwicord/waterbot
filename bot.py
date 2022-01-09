@@ -16,7 +16,7 @@ from error import CommandErrorHandler
 
 from listeners.rainbow_role import RainbowRoleListener
 
-client = commands.Bot(command_prefix='-')
+client = commands.Bot(command_prefix='.')
 
 intents = discord.Intents.default()
 intents.members = True

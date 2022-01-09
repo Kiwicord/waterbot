@@ -22,13 +22,16 @@ class MusicPlayer(commands.Cog):
             self.song_queue[ctx.guild.id].pop(0)
         
     async def search_song(self, amount, song, get_url=False):
-        info = await self.client.loop.run_in_executor(None, lambda: youtube_dl.YoutubeDL({
-            'format': 'bestaudio',
-            'quiet': True}
-        ).extract_info(f'ytsearch{amount}:{song}', download=False, ie_key='YoutubeSearch'))
-        if len(info['entries']) == 0: return None
+        try:
+            info = await self.client.loop.run_in_executor(None, lambda: youtube_dl.YoutubeDL({
+                'format': 'bestaudio',
+                'quiet': True}
+            ).extract_info(f'ytsearch{amount}:{song}', download=False, ie_key='YoutubeSearch'))
+            if len(info['entries']) == 0: return None
 
-        return [entry['webpage_url'] for entry in info['entries']] if get_url else info
+            return [entry['webpage_url'] for entry in info['entries']] if get_url else info
+        except KeyError:
+            pass
     
     async def play_song(self, ctx, song):
         url = pafy.new(song).getbestaudio().url

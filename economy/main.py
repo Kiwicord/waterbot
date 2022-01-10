@@ -99,6 +99,36 @@ class EconomyManager(commands.Cog):
 
         embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 von deiner Bank abgehoben.')
         await ctx.send(embed=embed3)
+    
+    @commands.command(aliases=['dep'])
+    async def deposit(self, ctx, amount=None):
+
+        await open_account(ctx.author)
+
+        if amount == None:
+            embed = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Bitte gib einen Betrag an, der auf deine Bank überwiesen werden soll.')
+            await ctx.send(embed=embed)
+            return
+
+        bal = await update_bank(ctx.author)
+
+        amount = int(amount)
+
+        if amount > bal[0]:
+            embed1 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du hast nicht genügend Geld.')
+            await ctx.send(embed=embed1)
+            return
+        
+        if amount < 0:
+            embed2 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du kannst keinen negativen Betrag überweisen.')
+            await ctx.send(embed=embed2)
+            return
+        
+        await update_bank(ctx.author, -1*amount)
+        await update_bank(ctx.author, -amount, 'bank')
+
+        embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 auf deine Bank überwiesen.')
+        await ctx.send(embed=embed3)
 
 def setup(client):
     client.add_cog(EconomyManager(client))

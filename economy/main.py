@@ -82,6 +82,15 @@ class EconomyManager(commands.Cog):
 
         bal = await update_bank(ctx.author)
 
+        if amount == 'all' or 'max':
+            users = await get_bank_data()
+            bank_amt = users[str(ctx.author.id)]['bank']
+            await update_bank(ctx.author, bank_amt)
+            await update_bank(ctx.author, -1*bank_amt, 'bank')
+            embed4 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{bank_amt}**🐚 auf deine Bank überwiesen.')
+            await ctx.send(embed=embed4)
+            return
+
         amount = int(amount)
 
         if amount > bal[1]:
@@ -111,6 +120,15 @@ class EconomyManager(commands.Cog):
             return
 
         bal = await update_bank(ctx.author)
+
+        if amount == 'all' or 'max':
+            users = await get_bank_data()
+            wallet_amt = users[str(ctx.author.id)]['wallet']
+            await update_bank(ctx.author, -1*wallet_amt)
+            await update_bank(ctx.author, wallet_amt, 'bank')
+            embed4 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{wallet_amt}**🐚 auf deine Bank überwiesen.')
+            await ctx.send(embed=embed4)
+            return
 
         amount = int(amount)
 

@@ -72,24 +72,29 @@ class EconomyManager(commands.Cog):
     
     @commands.command(aliases=['with'])
     async def withdraw(self, ctx, amount=None):
+
         await open_account(ctx.author)
 
         if amount == None:
             embed = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Bitte gib einen Betrag an, der von deiner Bank abgehoben werden soll.')
-            return await ctx.send(embed=embed)
+            await ctx.send(embed=embed)
+            return
 
-        bal = await update_bank(user=ctx.author)
+        bal = await update_bank(ctx.author)
 
         amount = int(amount)
+
         if amount > bal[1]:
             embed1 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du hast nicht genügend Geld auf der Bank.')
-            return await ctx.send(embed=embed1)
+            await ctx.send(embed=embed1)
+            return
         
         if amount < 0:
             embed2 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du kannst keinen negativen Betrag abheben.')
-            return await ctx.send(embed=embed2)
+            await ctx.send(embed=embed2)
+            return
         
-        await update_bank(ctx.author, amount, 'wallet')
+        await update_bank(ctx.author, amount)
         await update_bank(ctx.author, -1*amount, 'bank')
 
         embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 von deiner Bank abgehoben.')

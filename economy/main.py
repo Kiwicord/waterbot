@@ -26,7 +26,7 @@ async def update_bank(user, change=0, mode='wallet'):
     users = await get_bank_data()
     users[str(user.id)][mode] += change
 
-    with open('bank.json', 'r') as f:
+    with open('bank.json', 'w') as f:
         json.dump(users, f)
 
     bal = [users[str(user.id)]['wallet'], users[str(user.id)]['bank']]
@@ -99,13 +99,6 @@ class EconomyManager(commands.Cog):
 
         embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 von deiner Bank abgehoben.')
         await ctx.send(embed=embed3)
-    
-    @commands.has_permissions(administrator=True)
-    @commands.command()
-    async def give_money(self, ctx, user : discord.Member.id, amount):
-        await open_account(user)
-        
-        await update_bank(user, amount)
-        
+
 def setup(client):
     client.add_cog(EconomyManager(client))

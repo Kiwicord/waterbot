@@ -125,7 +125,7 @@ class EconomyManager(commands.Cog):
             return
         
         await update_bank(ctx.author, -1*amount)
-        await update_bank(ctx.author, -amount, 'bank')
+        await update_bank(ctx.author, amount, 'bank')
 
         embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 auf deine Bank überwiesen.')
         await ctx.send(embed=embed3)

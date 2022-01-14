@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from database_connctor import *
+from database_connector import *
 import random
 
 class EconomyManager(commands.Cog):

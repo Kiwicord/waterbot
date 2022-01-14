@@ -1,37 +1,7 @@
 import discord
 from discord.ext import commands
-import json
+from database_connctor import *
 import random
-
-async def open_account(user):
-    users = await get_bank_data()
-    
-    if str(user.id) in users:
-        return False
-    else:
-        users[str(user.id)] = {}
-        users[str(user.id)]['wallet'] = 0 # allgemeines geld auf der hand
-        users[str(user.id)]['bank'] = 0 # geld in der bank
-
-    with open('bank.json', 'w') as f:
-        json.dump(users, f)
-    return True
-
-async def get_bank_data():
-    with open('bank.json', 'r') as f:
-        users = json.load(f)
-    return users
-
-async def update_bank(user, change=0, mode='wallet'):
-    users = await get_bank_data()
-    users[str(user.id)][mode] += change
-
-    with open('bank.json', 'w') as f:
-        json.dump(users, f)
-
-    bal = [users[str(user.id)]['wallet'], users[str(user.id)]['bank']]
-    f.close()
-    return bal
 
 class EconomyManager(commands.Cog):
     def __init__(self, client):
@@ -40,114 +10,57 @@ class EconomyManager(commands.Cog):
     @commands.command(aliases=['bal'])
     async def balance(self, ctx):
 
-        user = ctx.author
+        await check_account(str(ctx.author.id))
 
-        await open_account(ctx.author)
-        users = await get_bank_data()
+        info = await select_from_database(ctx.author.id)
 
-        wallet_amt = users[str(user.id)]['wallet']
-        bank_amt = users[str(user.id)]['bank']
-
-        embed = discord.Embed(title=f'<a:bewegendeszeichenlmao:920059343108452353> Kontostand von {ctx.author}', color=0x415fe6)
-        embed.add_field(name='Geld', value=f'**{wallet_amt}**🐚', inline=False)
-        embed.add_field(name='Bank', value=f'**{bank_amt}**🐚', inline=False)
-        await ctx.send(embed=embed)
+        user_id = info[0]
+        wallet = info[1]
+        bank = info[2]
+        await ctx.send(f'Kontostand für <@{user_id}>\nGeld: {wallet}\nBank: {bank}')
 
     @commands.command()
     async def work(self, ctx):
+        await check_account(ctx.author.id)
+        income = random.randint(1, 1000)
+        await update_wallet(ctx.author.id, income)
+        await ctx.send(f'Du hast für {income}€ gearbeitet')
 
-        user = ctx.author
-
-        await open_account(ctx.author)
-        users = await get_bank_data()
-
-        income = random.randint(1, 100)
-
-        embed = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Gearbeitet!', description=f'Du hast für **{income}** 🐚 gearbeitet.')
-        await ctx.send(embed=embed)
-        wallet_amt = users[str(user.id)]['wallet']
-        users[str(user.id)]['wallet'] += income
-
-        with open('bank.json', 'w') as f:
-            json.dump(users, f, indent=4)
-    
-    @commands.command(aliases=['with'])
-    async def withdraw(self, ctx, amount=None):
-
-        await open_account(ctx.author)
-
-        if amount == None:
-            embed = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Bitte gib einen Betrag an, der von deiner Bank abgehoben werden soll.')
-            await ctx.send(embed=embed)
-            return
-
-        bal = await update_bank(ctx.author)
-
-        if amount == 'all' or 'max':
-            users = await get_bank_data()
-            bank_amt = users[str(ctx.author.id)]['bank']
-            await update_bank(ctx.author, bank_amt)
-            await update_bank(ctx.author, -1*bank_amt, 'bank')
-            embed4 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{bank_amt}**🐚 auf deine Bank überwiesen.')
-            await ctx.send(embed=embed4)
-            return
-
-        amount = int(amount)
-
-        if amount > bal[1]:
-            embed1 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du hast nicht genügend Geld auf der Bank.')
-            await ctx.send(embed=embed1)
-            return
-        
-        if amount < 0:
-            embed2 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du kannst keinen negativen Betrag abheben.')
-            await ctx.send(embed=embed2)
-            return
-        
-        await update_bank(ctx.author, amount)
-        await update_bank(ctx.author, -1*amount, 'bank')
-
-        embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 von deiner Bank abgehoben.')
-        await ctx.send(embed=embed3)
-    
     @commands.command(aliases=['dep'])
     async def deposit(self, ctx, amount=None):
-
-        await open_account(ctx.author)
-
+        await check_account(ctx.author.id)
+        info = await select_from_database(ctx.author.id)
+        wallet = info[1]
         if amount == None:
-            embed = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Bitte gib einen Betrag an, der auf deine Bank überwiesen werden soll.')
-            await ctx.send(embed=embed)
+            await ctx.send('Der Betrag darf nicht leer sein')
             return
-
-        bal = await update_bank(ctx.author)
-
-        if amount == 'all' or 'max':
-            users = await get_bank_data()
-            wallet_amt = users[str(ctx.author.id)]['wallet']
-            await update_bank(ctx.author, -1*wallet_amt)
-            await update_bank(ctx.author, wallet_amt, 'bank')
-            embed4 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{wallet_amt}**🐚 auf deine Bank überwiesen.')
-            await ctx.send(embed=embed4)
+        if wallet <= 0:
+            await ctx.send('Du hast nicht genügend Geld')
             return
-
-        amount = int(amount)
-
-        if amount > bal[0]:
-            embed1 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du hast nicht genügend Geld.')
-            await ctx.send(embed=embed1)
+        if amount == 'all':
+            await deposit_amount(ctx.author.id, amount=wallet)
+            await ctx.send(f'Du hast {wallet}€ auf dein Konto überwiesen.')
             return
-        
-        if amount < 0:
-            embed2 = discord.Embed(color=0x415fe6, description='<a:bewegendeszeichenlmao:920059343108452353> Du kannst keinen negativen Betrag überweisen.')
-            await ctx.send(embed=embed2)
-            return
-        
-        await update_bank(ctx.author, -1*amount)
-        await update_bank(ctx.author, amount, 'bank')
+        await deposit_amount(ctx.author.id, amount=amount)
+        await ctx.send(f'Du hast {amount}€ auf dein Konto überwiesen.')
 
-        embed3 = discord.Embed(color=0x415fe6, title='<a:bewegendeszeichenlmao:920059343108452353> Erfolgreich abgehoben!', description=f'Du hast erfolgreich **{amount}**🐚 auf deine Bank überwiesen.')
-        await ctx.send(embed=embed3)
+    @commands.command(aliases=['with'])
+    async def withdraw(self, ctx, amount):
+        await check_account(ctx.author.id)
+        info = await select_from_database(ctx.author.id)
+        bank = info[2]
+        if amount == None:
+            await ctx.send('Der Betrag darf nicht leer sein')
+            return
+        if bank <= 0:
+            await ctx.send('Du hast nicht genügend Geld auf der Bank')
+            return
+        if amount == 'all':
+            await withdraw_amount(ctx.author.id, amount=bank)
+            await ctx.send(f'Du hast {bank}€ abgehoben.')
+            return
+        await withdraw_amount(ctx.author.id, amount=amount)
+        await ctx.send(f'Du hast {amount}€ abgehoben.')
 
 def setup(client):
     client.add_cog(EconomyManager(client))

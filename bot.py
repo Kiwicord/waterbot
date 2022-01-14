@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 import asyncio
 import threading
+from os import getenv
+from dotenv import load_dotenv
 
 from commands.test import Test
 from commands.ban import Ban
@@ -20,6 +22,8 @@ client = commands.Bot(command_prefix='.')
 
 intents = discord.Intents.default()
 intents.members = True
+
+load_dotenv()
 
 @client.event
 async def on_ready():
@@ -51,4 +55,4 @@ async def setup():
     client.add_cog(CommandErrorHandler(client))
 
 client.loop.create_task(setup())
-client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.op4sq36zQqAF_N5fhWES9Gi23hQ')
+client.run(getenv('TOKEN'))

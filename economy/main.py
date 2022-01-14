@@ -30,6 +30,7 @@ async def update_bank(user, change=0, mode='wallet'):
         json.dump(users, f)
 
     bal = [users[str(user.id)]['wallet'], users[str(user.id)]['bank']]
+    f.close()
     return bal
 
 class EconomyManager(commands.Cog):

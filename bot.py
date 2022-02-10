@@ -20,9 +20,9 @@ client = commands.Bot(command_prefix=',')
 intents = discord.Intents.default()
 intents.members = True
 
-async def change_rainbow_role_color(self):
+async def change_rainbow_role_color():
     # rainbow rolle
-    guild = self.client.get_guild(813039986545917965)
+    guild = client.get_guild(813039986545917965)
     rainbow_role_id = 850832485658787840
     rainbow_role = discord.utils.get(guild.roles, id=rainbow_role_id)
     while True:

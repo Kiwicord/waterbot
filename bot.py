@@ -1,9 +1,6 @@
 import discord
 from discord.ext import commands
 import asyncio
-import threading
-from os import getenv
-from dotenv import load_dotenv
 
 from commands.test import Test
 from commands.ban import Ban
@@ -16,14 +13,21 @@ from music.player_main import MusicPlayer
 from economy.main import EconomyManager
 from error import CommandErrorHandler
 
-from listeners.rainbow_role import RainbowRoleListener
+from listeners.rainbow_role import *
 
-client = commands.Bot(command_prefix='.')
+client = commands.Bot(command_prefix=',')
 
 intents = discord.Intents.default()
 intents.members = True
 
-load_dotenv()
+async def change_rainbow_role_color(self):
+    # rainbow rolle
+    guild = self.client.get_guild(813039986545917965)
+    rainbow_role_id = 850832485658787840
+    rainbow_role = discord.utils.get(guild.roles, id=rainbow_role_id)
+    while True:
+        await rainbow_role.edit(color=discord.Color.random())
+        await asyncio.sleep(cooldown)
 
 @client.event
 async def on_ready():
@@ -32,6 +36,8 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
+    await change_rainbow_role_color()
 
     while True:
         # status
@@ -51,8 +57,8 @@ async def setup():
     client.add_cog(LevelSystem(client))
     client.add_cog(RainbowRoleListener(client))
     client.add_cog(MusicPlayer(client))
-    client.add_cog(EconomyManager(client))
+    # client.add_cog(EconomyManager(client))
     client.add_cog(CommandErrorHandler(client))
 
 client.loop.create_task(setup())
-client.run(getenv('TOKEN'))
+client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.dRq7A_qeC-XY0X3E43-DzZ1EGQw')

@@ -26,7 +26,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-    # await change_rainbow_role_color()
+    await change_rainbow_role_color()
 
     while True:
         # status

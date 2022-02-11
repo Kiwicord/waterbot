@@ -4,7 +4,7 @@ import asyncio
 import os
 from cogs.rainbow_role import *
 
-client = commands.Bot(command_prefix=',')
+client = commands.Bot(command_prefix='-')
 
 intents = discord.Intents.default()
 intents.members = True
@@ -47,4 +47,4 @@ for filename in os.listdir("./cogs"):
 	if filename.endswith(".py"):
 		client.load_extension(f"cogs.{filename[:-3]}")
 
-client.run('ODUwODI5MDU5MjEwNzM5NzYz.YLvaTw.1eTl7oP9Mdu_hG7k6Kj9PNSYjAQ')
+client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.dRq7A_qeC-XY0X3E43-DzZ1EGQw')

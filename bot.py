@@ -1,18 +1,7 @@
 import discord
 from discord.ext import commands
 import asyncio
-
-from commands.test import Test
-from commands.ban import Ban
-from commands.kick import Kick
-from commands.hack import Hack
-from commands.gay import Gay
-from commands.fisch import Fisch
-from commands.levels import LevelSystem
-from music.player_main import MusicPlayer
-from economy.main import EconomyManager
-from error import CommandErrorHandler
-
+import os
 from listeners.rainbow_role import *
 
 client = commands.Bot(command_prefix=',')
@@ -37,7 +26,7 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-    await change_rainbow_role_color()
+    # await change_rainbow_role_color()
 
     while True:
         # status
@@ -46,19 +35,16 @@ async def on_ready():
         await client.change_presence(activity=discord.Game(name="mit Kuappis Fischen"))
         await asyncio.sleep(10)
 
-async def setup():
-    await client.wait_until_ready()
-    client.add_cog(Test(client))
-    client.add_cog(Ban(client))
-    client.add_cog(Kick(client))
-    client.add_cog(Hack(client))
-    client.add_cog(Gay(client))
-    client.add_cog(Fisch(client))
-    client.add_cog(LevelSystem(client))
-    client.add_cog(RainbowRoleListener(client))
-    client.add_cog(MusicPlayer(client))
-    # client.add_cog(EconomyManager(client))
-    client.add_cog(CommandErrorHandler(client))
+@client.command()
+async def load(ctx, extension):
+    client.load_extension(f'commands.{extension}')
 
-client.loop.create_task(setup())
-client.run('OTI5Mzg1ODE5NDAyMjk3NDQ2.Ydmj_g.dRq7A_qeC-XY0X3E43-DzZ1EGQw')
+@client.command()
+async def unload(ctx, extension):
+    client.unload_extension(f'commands.{extension}')
+
+for filename in os.listdir("./commands"):
+	if filename.endswith(".py"):
+		client.load_extension(f"commands.{filename[:-3]}")
+
+client.run('ODUwODI5MDU5MjEwNzM5NzYz.YLvaTw.1eTl7oP9Mdu_hG7k6Kj9PNSYjAQ')

@@ -3,3 +3,4 @@ class Emojis:
     FISHAUFWISH = '<:fishaufwish:919007955406446593>'
     PFEIL = '<:ww_pfeil:942752451025588244>'
     KREUZ = '<:ww_kreuz:942753518295580674>'
+    PUNKT = '<:ww_punkt:942492453410332722>'

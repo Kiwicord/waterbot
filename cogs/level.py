@@ -76,7 +76,7 @@ class LevelSystem(commands.Cog):
         embed.add_field(name='Platz', value=f'{rank}/{ctx.guild.member_count}', inline=True)
         embed.add_field(name='Level Fortschritt', value=boxes * ':blue_square:' + (20-boxes) * ':white_large_square:', inline=False)
         try:
-            embed.set_thumbnail(url=member.avatar.url)
+            embed.set_thumbnail(url=member.avatar_url)
         except AttributeError:
             embed.set_thumbnail(url=member.default_avatar_url)
         await ctx.reply(embed=embed, mention_author=False)

@@ -4,6 +4,7 @@ from pymongo import MongoClient
 cluster = MongoClient('mongodb+srv://kiwious:iyCnc4g0DIv1XyUL@cluster0.ju2ct.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 db = cluster['waterworld']
 bank = db['waterworld-economy']
+levelling = db['waterworld-level']
 
 # main economy
 # --------------------------------------------------------

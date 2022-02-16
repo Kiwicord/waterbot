@@ -26,8 +26,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-    await change_rainbow_role_color()
-
     while True:
         # status
         await client.change_presence(activity=discord.Game(name=f"mit {str(len(client.guilds))} Servern"))
@@ -35,6 +33,8 @@ async def on_ready():
         await client.change_presence(activity=discord.Game(name="mit Kuappis Fischen"))
         await asyncio.sleep(10)
 
+
+    await change_rainbow_role_color()
 @client.command()
 async def load(ctx, extension):
     client.load_extension(f'cogs.{extension}')

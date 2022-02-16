@@ -78,7 +78,7 @@ class LevelSystem(commands.Cog):
         try:
             embed.set_thumbnail(url=member.avatar.url)
         except AttributeError:
-            embed.set_thumbnail(url=member.default_avatar.url)
+            embed.set_thumbnail(url=member.default_avatar_url)
         await ctx.reply(embed=embed, mention_author=False)
 
 

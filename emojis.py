@@ -4,3 +4,6 @@ class Emojis:
     PFEIL = '<:ww_pfeil:942752451025588244>'
     KREUZ = '<:ww_kreuz:942753518295580674>'
     PUNKT = '<:ww_punkt:942492453410332722>'
+
+class Waterworld:
+    BLUE = 0x415fe6

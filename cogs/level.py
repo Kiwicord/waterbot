@@ -39,7 +39,7 @@ class LevelSystem(commands.Cog):
                     for i in range(len(level)):
                         if lvl == levelnum[i]:
                             await message.author.add_roles(discord.utils.get(message.author.guild.roles, name=level[i]))
-                            embed_levelup.description = f'Du hast die Rolle **{level[i]} freigeschaltet!**'
+                            embed_levelup.description = f'Du hast die Rolle **{level[i]}** freigeschaltet!'
                             await message.channel.send(embed=embed_levelup)
                 
 
